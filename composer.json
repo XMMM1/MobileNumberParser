@@ -1,0 +1,7 @@
+{
+    "require-dev": {
+        "squizlabs/php_codesniffer": "2.*",
+        "twitter/bootstrap": "v3.0.0",
+        "components/jquery": "1.9.*"
+    }
+}
