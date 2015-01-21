@@ -1,44 +1,49 @@
 <?php
 
-namespace  Mno;
+namespace Mno;
 
-class MSDN {
+/**
+ *
+ * @package    Mno
+ * @author     Matej Murn <matej.murn@gmail.com>
+ * @copyright  Matej Murn <matej.murn@gmail.com>
+ */
 
-    public function __construct() {
-        
+class Msisdn
+{
+
+    public function __construct()
+    {
+
     }
 
-    public function MSDN() {
-        
-    }
-
-    /*
+    /**
      * Function getPrefixDetail
      * Get prefix MNO and country
-     * 
-     * @param string telephone number prefix
+     *
+     * @param  string telephone number prefix
      * @return array
      */
 
-    static function getPrefixDetail($prefix = null) {
-        $mno = array('SI' => array('Si.mobil' => '040', 'Tusmobil' => '070'),
-            'RU' => array('Simobil' => '040', 'Tusmobil' => '070'),
-            'Ri' => array('Simobil' => '040', 'Tusmobil' => '070'),
-            'si' => array('Simobil' => '040', 'Tusmobil' => '070'),
-            'ci' => array('Simobil' => '040', 'Tusmobil' => '070'),
-            'ki' => array('Simobil' => '040', 'Tusmobil' => '070'),
-            'fw' => array('Simobil' => '040', 'Tusmobil' => '070')
-        );
-        foreach ($mno as $country => $mnoProvider) {
-            foreach ($mnoProvider as $name => $mnoPrefix) {
-                if (strpos($mnoPrefix, $prefix) !== false) {
-                    return array($country, $name);
-                }
-            }
-        }
+    public static function getPrefixDetail($prefix = null)
+    {
 
-        return false;
     }
 
+    /**
+     * Parse inserted MSISDN and return data in shape:
+     * MNO identifier, country dialling code, subscriber number and country identifier
+     *
+     * Example:
+     * Input: + 38640123456
+     * Output: si.mobil, 386, 40123456, SI
+     *
+     * @param  string msisdn number
+     * @return info string about inserted $msisdn
+     */
 
+    public static function getMsisdnDetail($msisdn = null)
+    {
+
+    }
 }

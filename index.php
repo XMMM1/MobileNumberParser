@@ -30,10 +30,10 @@ and open the template in the editor.
         </form>
         <div style="margin-top: 10px;">
             <?php
-            require_once './mno.php';
+            require_once './Mno.php';
             $tmp = '';
             if (array_key_exists('msisdn', $_POST)) {
-                $tmp = \Mno\MSDN::getMsisdnDetail($_POST['msisdn']);
+                $tmp = Mno\Msisdn::getMsisdnDetail($_POST['msisdn']);
             }
 
             if ($tmp != false) {
