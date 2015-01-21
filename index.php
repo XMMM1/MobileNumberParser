@@ -29,7 +29,25 @@ and open the template in the editor.
             </div>
         </form>
         <div style="margin-top: 10px;">
-           content tralala
+            <?php
+            require_once './mno.php';
+            $tmp = '';
+            if (array_key_exists('msisdn', $_POST)) {
+                $tmp = \Mno\MSDN::getMsisdnDetail($_POST['msisdn']);
+            }
+
+            if ($tmp != false) {
+                echo ' <div class="alert alert-success">';
+                echo 'Vaša telefonska številka ima naslednje podatke: ' . $tmp;
+                echo '</div>';
+            }
+
+            if ($tmp == null) {
+                echo ' <div class="alert alert-danger">';
+                echo 'Napačen vnos podatkov.';
+                echo '</div>';
+            }
+            ?>
 
         </div>
     </div>
