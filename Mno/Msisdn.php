@@ -8,11 +8,13 @@ namespace Mno;
  * @author     Matej Murn <matej.murn@gmail.com>
  * @copyright  Matej Murn <matej.murn@gmail.com>
  */
-class Msisdn {
+class Msisdn
+{
 
     public $msisdn = null;
 
-    public function __construct($msisdn) {
+    public function __construct($msisdn)
+    {
         $this->msisdn = preg_replace('/\s+/', '', $msisdn);
     }
 
@@ -29,7 +31,7 @@ class Msisdn {
      * +20 10 xx xxx xxx    Vodafone
      * +20 11 xx xxx xxx    Etisalat
      * CA
-     * 600-XXX-XXX 
+     * 600-XXX-XXX
      * AR
      * Unknown +54 9 11 xx xxx xxx
      * AU
@@ -44,7 +46,8 @@ class Msisdn {
      * @param  string msisdn number
      * @return info string about inserted $msisdn
      */
-    public function getMsisdnDetail() {
+    public function getMsisdnDetail()
+    {
         if ($this->msisdn === null) {
             return false;
         }
@@ -99,11 +102,8 @@ class Msisdn {
                 $num = substr($this->msisdn, strlen('+' . $cPrefix[0]));
             }
 
-            $splitMsisdn = str_split($this->msisdn, 3);
-
             $info = $data[0] . ', ' . $cPrefix[0] . ', ' . $num .
-                    $splitMsisdn[2] . $splitMsisdn[3] .
-                    ', ' . $data[1];
+                ', ' . $data[1];
 
             return $info;
         }
