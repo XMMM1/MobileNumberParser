@@ -8,85 +8,34 @@ namespace Mno;
  * @author     Matej Murn <matej.murn@gmail.com>
  * @copyright  Matej Murn <matej.murn@gmail.com>
  */
-
-class Msisdn
-{
+class Msisdn {
 
     public $msisdn = null;
 
-    public function __construct($msisdn)
-    {
-        $this->msisdn = $msisdn;
-    }
-
-    /**
-     * Function getPrefixDetail
-     * Get prefix MNO and country
-     *
-     * SI
-     * +396 0xx xxx xxx
-     * CN
-     * +86 1 xx xxxx xxxx
-     * EG
-     * +20 10 xxxx xxxx    Vodafone
-     * +20 11 xxxx xxxx    Etisalat
-     * CA
-     * NPA-NXX-XXX [2-9][0-9][0-9] [2-9][0-9][0-9] [0-9][0-9][0-9]
-     * BR
-     * anatel 9xxxx-xxxx
-     * AU
-     * +61 04 xxxx xxxx
-     * @param  string telephone number prefix
-     * @return array
-     */
-
-    public static function getPrefixDetail($prefix = null)
-    {
-        //TODO: make a rule array
-        $mno = array(
-            'SI' => array(
-                '386' => array(
-                    'Si.mobil' => array('040'),
-                    'Telekom' => array('031', '051', '041')),
-                'len' => 12),
-            'CN' => array(
-                '86' => array(
-                    'China Unicom' => array('130', '131', '132', '145', '155', '156', '185', '186'),
-                    'China Telecom' => array('133', '153', '180', '181', '189')),
-                'len' => 11),
-            'EG' => array(
-                '20' => array(
-                    'Vodafone' => array('10'),
-                    'Etisalat' => array('11')),
-                'len' => 12),
-            'CA' => array(
-                '1' => array(
-                    'Unknown' => array('')),
-                'len' => 11),
-            'BR' => array(
-                '55' => array(
-                    'Anatel' => array('9')),
-                'len' => 11),
-            'AU' => array(
-                '61' => array(
-                    'Anatel' => array('04')),
-                'len' => 12)
-        );
-
-        foreach ($mno as $country => $mnoProvider) {
-            foreach ($mnoProvider as $name => $mnoPrefix) {
-                if (strpos($mnoPrefix, $prefix) !== false) {
-                    return array($country, $name);
-                }
-            }
-        }
-
-        return false;
+    public function __construct($msisdn) {
+        $this->msisdn = preg_replace('/\s+/', '', $msisdn);
     }
 
     /**
      * Parse inserted MSISDN and return data in shape:
      * MNO identifier, country dialling code, subscriber number and country identifier
+     *
+     * SI
+     * +396 0xx xxx xxx
+     * /^[+386][40][0-9]{6}$/
+     * CN
+     * +86 1 x xxx xxx xxx
+     * EG
+     * +20 10 xx xxx xxx    Vodafone
+     * +20 11 xx xxx xxx    Etisalat
+     * CA
+     * 600-XXX-XXX 
+     * AR
+     * Unknown +54 9 11 xx xxx xxx
+     * AU
+     * +61 04 xx xxx xxx
+     * @param  string telephone number prefix
+     * @return array
      *
      * Example:
      * Input: + 38640123456
@@ -95,24 +44,71 @@ class Msisdn
      * @param  string msisdn number
      * @return info string about inserted $msisdn
      */
-
-    public function getMsisdnDetail()
-    {
+    public function getMsisdnDetail() {
         if ($this->msisdn === null) {
             return false;
         }
-        $msisdn = preg_replace('/\s+/', '', $this->msisdn);
-        $msisdn = substr($msisdn, 1, strlen($msisdn));
-        $splitMsisdn = str_split($msisdn, 3);
-        $tmp = Msisdn::getPrefixDetail(substr($msisdn, 3, 2));
 
-        if ($tmp !== false) {
-            $info = $tmp[1] . ', ' . $splitMsisdn[0] . ', ' . $splitMsisdn[1] . $splitMsisdn[2] . $splitMsisdn[3] .
-                ', ' . $tmp[0];
+        $mno = array(
+            'SI' => array(
+                '386' => array(
+                    'Si.mobil' => '/^[+]386(40)[0-9]{6}$/',
+                    'Telekom' => '/^[+]386(31|41|51)[0-9]{6}$/')),
+            'CN' => array(
+                '86' => array(
+                    'China Unicom' => '/^[+]86(130|131|132|145|155|156|185|186)[0-9]{8}$/',
+                    'China Telecom' => '/^[+]86(133|153|180|181|189)[0-9]{8}$/')),
+            'EG' => array(
+                '20' => array(
+                    'Vodafone' => '/^[+]20(10)[0-9]{8}$/',
+                    'Etisalat' => '/^[+]20(11)[0-9]{8}$/')),
+            'CA' => array(
+                '1' => array(
+                    'Unknown' => '/^[+]1(600)[0-9]{6}$/')),
+            'AR' => array(
+                '54' => array(
+                    'Unknown' => '/^[+]54(911)[0-9]{8}$/')),
+            'AU' => array(
+                '61' => array(
+                    'Unknown' => '/^[+]61(04)[0-9]{8}$/')
+            )
+        );
+
+        $data = array();
+        foreach ($mno as $country => $cMnos) {
+            foreach ($cMnos as $cMnoName => $cPrefix) {
+                foreach ($cPrefix as $cMnoName => $regex) {
+                    if (preg_match($regex, $this->msisdn)) {
+                        $data = array($cMnoName, $country);
+                        break;
+                    }
+                }
+                if (!empty($data)) {
+                    break;
+                }
+            }
+            if (!empty($data)) {
+                break;
+            }
+        }
+
+        if (!empty($data)) {
+            $cPrefix = (array_keys($mno[$data[1]]));
+            $num = null;
+            if (substr($this->msisdn, 0, strlen(('+' . $cPrefix[0]))) == ('+' . $cPrefix[0])) {
+                $num = substr($this->msisdn, strlen('+' . $cPrefix[0]));
+            }
+
+            $splitMsisdn = str_split($this->msisdn, 3);
+
+            $info = $data[0] . ', ' . $cPrefix[0] . ', ' . $num .
+                    $splitMsisdn[2] . $splitMsisdn[3] .
+                    ', ' . $data[1];
 
             return $info;
         }
 
         return false;
     }
+
 }
