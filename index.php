@@ -43,7 +43,7 @@ and open the template in the editor.
                 echo '</div>';
             }
 
-            if ($detail == null) {
+            if ($detail == false) {
                 echo ' <div class="alert alert-danger">';
                 echo 'Napačen vnos podatkov.';
                 echo '</div>';
