@@ -13,6 +13,10 @@ class MsisdnTest extends \PHPUnit_Framework_TestCase
     {
         include dirname(__FILE__).'/../Msisdn.php';
         $ms = new \Mno\Msisdn('+38640734068');
+        $this->assertEquals('+38640734068', $ms->msisdn);
+
+
+        $ms = new \Mno\Msisdn('+38640734068');
         $this->assertEquals('Si.mobil, 386, 40734068, SI', $ms->getMsisdnDetail());
         $ms = new \Mno\Msisdn('+ 38640734068');
         $this->assertEquals('Si.mobil, 386, 40734068, SI', $ms->getMsisdnDetail());
