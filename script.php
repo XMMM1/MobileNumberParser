@@ -10,7 +10,7 @@ echo 'phpcs : ' . $output;
 $output = shell_exec('vendor/bin/phpmd ./Mno/Msisdn.php text codesize,design,naming,unusedcode,controversial --strict');
 echo 'phpmd : ' . $output;
 
-$output = shell_exec('vendor/bin/phpcpd --min-lines 3 --min-tokens 50 ./Mno/Msisdn.php');
+$output = shell_exec('phpcpd --min-lines 3 --min-tokens 50 ./Mno/Msisdn.php');
 echo 'phpcpd : ' . $output;
 
 
@@ -25,5 +25,5 @@ echo 'phpcs : ' . $output;
 $output = shell_exec('vendor/bin/phpmd ./Mno/Test/MsisdnTest.php text codesize,design,naming,unusedcode,controversial --strict');
 echo 'phpmd : ' . $output;
 
-$output = shell_exec('vendor/bin/phpcpd --min-lines 3 --min-tokens 50 ./Mno/Test/MsisdnTest.php');
+$output = shell_exec('phpcpd --min-lines 3 --min-tokens 50 ./Mno/Test/MsisdnTest.php');
 echo 'phpcpd : ' . $output;
