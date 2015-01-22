@@ -2,7 +2,6 @@
 
 namespace Mno\Test;
 
-
 class MsisdnTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -158,5 +157,4 @@ class MsisdnTest extends \PHPUnit_Framework_TestCase
         $ms = new \Mno\Msisdn('+ 12341asdgasd');
         $this->assertEquals(false, $ms->getMsisdnDetail());
     }
-
 }

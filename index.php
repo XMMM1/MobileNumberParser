@@ -40,13 +40,12 @@ and open the template in the editor.
                 echo '<div class="alert alert-success">';
                 echo 'Vaša telefonska številka ima naslednje podatke: ' . $detail;
                 echo '</div>';
-            }
-
-            if ($detail == false) {
+            }else{
                 echo ' <div class="alert alert-danger">';
                 echo 'Napačen vnos podatkov.';
                 echo '</div>';
             }
+
             ?>
 
         </div>
