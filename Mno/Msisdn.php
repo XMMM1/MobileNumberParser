@@ -11,7 +11,8 @@ namespace Mno;
 
 class Msisdn
 {
-    var $msisdn;
+
+    public $msisdn = null;
 
     public function __construct($msisdn)
     {
