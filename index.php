@@ -20,7 +20,7 @@ and open the template in the editor.
         <form method="post" action="index.php" id="form">
 
 
-            <input name="msisdn" id="msisdn" type="text" class="form-control" required="true"/>
+            <input name="msisdn" id="msisdn" type="text" class="form-control" required/>
             <br/>
 
             <div class="text-center">
