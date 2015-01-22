@@ -1,5 +1,5 @@
 <?php
-require './Mno.php';
+require './Msisdn.php';
 
 class MsisdnTest extends \PHPUnit_Framework_TestCase
 {

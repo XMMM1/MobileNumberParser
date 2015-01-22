@@ -10,7 +10,6 @@ and open the template in the editor.
     <title>Naloga</title>
     <link href="/vendor/twitter/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
     <link href="/vendor/twitter/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
-
 </head>
 <body>
 <div class="container">
@@ -30,19 +29,21 @@ and open the template in the editor.
         </form>
         <div style="margin-top: 10px;">
             <?php
-            require_once './Mno.php';
-            $tmp = '';
+
+            require_once './Mno/Msisdn.php';
+            $detail = '';
             if (array_key_exists('msisdn', $_POST)) {
-                $tmp = Mno\Msisdn::getMsisdnDetail($_POST['msisdn']);
+                $ms = new \Mno\Msisdn($_POST['msisdn']);
+                $detail = $ms->getMsisdnDetail();
             }
 
-            if ($tmp != false) {
+            if ($detail != false) {
                 echo ' <div class="alert alert-success">';
-                echo 'Vaša telefonska številka ima naslednje podatke: ' . $tmp;
+                echo 'Vaša telefonska številka ima naslednje podatke: ' . $detail;
                 echo '</div>';
             }
 
-            if ($tmp == null) {
+            if ($detail == null) {
                 echo ' <div class="alert alert-danger">';
                 echo 'Napačen vnos podatkov.';
                 echo '</div>';
