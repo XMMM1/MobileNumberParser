@@ -12,3 +12,7 @@ class { "apache": }
 include php55
 include php
 
+#file { '/var/www/3fs':
+#  ensure => 'link',
+#  target => '/vagrat',
+#}

@@ -16,7 +16,7 @@ class apache
       subscribe   => [
         File["/etc/apache2/mods-enabled/rewrite.load"],
         File["/etc/apache2/sites-available/000-default.conf"],
-#        File["/etc/apache2/conf-enabled/phpmyadmin.conf"]
+      #        File["/etc/apache2/conf-enabled/phpmyadmin.conf"]
       ],
   }
 
@@ -35,6 +35,11 @@ class apache
       owner   => root, group => root,
       source  => "/vagrant/puppet/templates/vhost",
       require => Package['apache2'],
+  }
+
+  file { '/var/www/3fs':
+    ensure => 'link',
+    target => '/vagrant',
   }
 
   exec

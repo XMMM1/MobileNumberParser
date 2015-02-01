@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-	DocumentRoot "/var/www/3fs/"
+	DocumentRoot "/var/www/3fs"
 	ServerAdmin matej@murn.eu
 	
 	<Directory />
@@ -7,7 +7,7 @@
 		AllowOverride None
 	</Directory>
 	
-	<Directory /var/www/>
+	<Directory /var/www/3fs>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride All
 		Order allow,deny
