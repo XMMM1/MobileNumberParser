@@ -27,3 +27,13 @@ echo 'phpmd : ' . $output;
 
 $output = shell_exec('phpcpd --min-lines 3 --min-tokens 50 ./Mno/Test/MsisdnTest.php');
 echo 'phpcpd : ' . $output;
+
+
+$output = shell_exec('puppet parser validate puppet/manifests/default.pp');
+echo 'default.pp : ' . $output;
+$output = shell_exec('puppet parser validate puppet/modules/apache/manifests/init.pp');
+echo 'apache init.pp : ' . $output;
+$output = shell_exec('puppet parser validate puppet/modules/php/manifests/init.pp');
+echo 'php init.pp : ' . $output;
+$output = shell_exec('puppet parser validate puppet/modules/php55/manifests/init.pp');
+echo 'php55 init.pp : ' . $output;

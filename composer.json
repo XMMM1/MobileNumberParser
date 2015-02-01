@@ -5,6 +5,7 @@
         "components/jquery": "1.9.*",
         "phpunit/phpunit": "4.4.*",
         "phpmd/phpmd" : "@stable",
-        "sebastian/phpcpd": "*"
+        "sebastian/phpcpd": "*",
+        "jsonrpc/jsonrpc": "1.0.*"
     }
 }
