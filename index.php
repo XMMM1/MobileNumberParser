@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Naloga</title>
+    <title>Naloga 3fs</title>
     <link href="vendor/twitter/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
     <link href="vendor/twitter/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
 </head>
@@ -17,7 +17,7 @@ and open the template in the editor.
         <div class="page-header">
             Vnesite MSISDN:
         </div>
-        <form method="post" action="index.php" id="form">
+        <form method="post" action="" id="form">
 
 
             <input name="msisdn" id="msisdn" type="text" class="form-control" required/>
@@ -29,22 +29,49 @@ and open the template in the editor.
         </form>
         <div style="margin-top: 10px;">
             <?php
-            require_once './Mno/Msisdn.php';
-            $detail = '';
+            //            require_once './Mno/Msisdn_1.php';
+//            require './client.php';
+//            $detail = '';
             if (array_key_exists('msisdn', $_POST)) {
-                $ms = new \Mno\Msisdn($_POST['msisdn']);
-                $detail = $ms->getMsisdnDetail();
+                chdir(__DIR__ . '/vendor/jsonrpc/jsonrpc/src/');
+                ini_set('default_charset', 'UTF-8');
+                ini_set('display_errors', '1');
+
+# bootstrap for the example directory
+                require('bootstrap.php');
+                function getServerUrl()
+                {
+                    $path = dirname($_SERVER['PHP_SELF']) . '/server.php';
+                    $scheme = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http';
+                    return $scheme . '://' . $_SERVER['HTTP_HOST'] . $path;
+                }
+# get the url of the server script
+                $url = getServerUrl();
+# create our client object, passing it the server url
+                $Client = new JsonRpc\Client($url);
+
+# set up our rpc call with a method and params
+                $method = 'getMsisdnDetail';
+                $params = array($_POST['msisdn']);
+
+                $success = false;
+
+                $success = $Client->call($method, $params);
+                if ($success == true) {
+                    echo '<div class="alert alert-success">';
+                    echo 'Vaša telefonska številka ima naslednje podatke: ' . $Client->result;
+                    echo '</div>';
+                } else {
+                    echo ' <div class="alert alert-danger">';
+                    echo 'Napačen vnos podatkov.';
+                    echo '</div>';
+                }
+
+
             }
 
-            if ($detail != false) {
-                echo '<div class="alert alert-success">';
-                echo 'Vaša telefonska številka ima naslednje podatke: ' . $detail;
-                echo '</div>';
-            }else{
-                echo ' <div class="alert alert-danger">';
-                echo 'Napačen vnos podatkov.';
-                echo '</div>';
-            }
+
+
 
             ?>
 
@@ -65,7 +92,6 @@ and open the template in the editor.
             }
         });
     });
-
 </script>
 </body>
 </html>
