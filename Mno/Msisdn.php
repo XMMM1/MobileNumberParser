@@ -8,31 +8,33 @@ namespace Mno;
  * @author     Matej Murn <matej.murn@gmail.com>
  * @copyright  Matej Murn <matej.murn@gmail.com>
  */
-class Msisdn {
+class Msisdn
+{
 
     public $msisdn = null;
     public $error = null;
 
     /**
      * constructor
-     * 
+     *
      * @param type $msisdn
      */
-    public function __construct($msisdn = null) {
+    public function __construct($msisdn = null)
+    {
         $this->msisdn = $this->prepareMsisdn($msisdn);
     }
 
     /**
      * add needed rules to parse Msisdn ex. (removed space, perhaps some special characters..)
-     * 
+     *
      * @param type $msisdn
      */
-    public function prepareMsisdn($msisdn = null) {
-        //remove all spaces from msisdn string
+    public function prepareMsisdn($msisdn = null)
+    {
         $msisdn = preg_replace('/\s+/', '', $msisdn);
         if ($this->msisdn === null && $msisdn != null) {
             $this->msisdn = $msisdn;
-        }       
+        }
     }
 
     /**
@@ -63,14 +65,11 @@ class Msisdn {
      * @param  string msisdn number
      * @return info string about inserted $msisdn
      */
-    public function getMsisdnDetail($msisdn = null) {
+    public function getMsisdnDetail($msisdn = null)
+    {
         if ($this->msisdn === null) {
-            
             $this->prepareMsisdn($msisdn);
         }
-//       echo '<pre>';
-//       print_R($this->msisdn);
-//        die('over');
 
         $mno = array(
             'SI' => array(
@@ -123,7 +122,7 @@ class Msisdn {
             }
 
             $info = $data[0] . ', ' . $cPrefix[0] . ', ' . $num .
-                    ', ' . $data[1];
+                ', ' . $data[1];
 
             return $info;
         }

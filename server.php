@@ -15,5 +15,3 @@ $Server = new JsonRpc\Server($methods);
 
 # and tell the server to do its stuff
 $Server->receive();
-
-

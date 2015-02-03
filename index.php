@@ -29,34 +29,10 @@ and open the template in the editor.
         </form>
         <div style="margin-top: 10px;">
             <?php
-            //            require_once './Mno/Msisdn_1.php';
-//            require './client.php';
-//            $detail = '';
+
             if (array_key_exists('msisdn', $_POST)) {
-                chdir(__DIR__ . '/vendor/jsonrpc/jsonrpc/src/');
-                ini_set('default_charset', 'UTF-8');
-                ini_set('display_errors', '1');
-
-# bootstrap for the example directory
-                require('bootstrap.php');
-                function getServerUrl()
-                {
-                    $path = dirname($_SERVER['PHP_SELF']) . '/server.php';
-                    $scheme = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http';
-                    return $scheme . '://' . $_SERVER['HTTP_HOST'] . $path;
-                }
-# get the url of the server script
-                $url = getServerUrl();
-# create our client object, passing it the server url
-                $Client = new JsonRpc\Client($url);
-
-# set up our rpc call with a method and params
-                $method = 'getMsisdnDetail';
-                $params = array($_POST['msisdn']);
-
-                $success = false;
-
-                $success = $Client->call($method, $params);
+                include './client.php';
+                client();
                 if ($success == true) {
                     echo '<div class="alert alert-success">';
                     echo 'Vaša telefonska številka ima naslednje podatke: ' . $Client->result;
@@ -66,13 +42,7 @@ and open the template in the editor.
                     echo 'Napačen vnos podatkov.';
                     echo '</div>';
                 }
-
-
             }
-
-
-
-
             ?>
 
         </div>
