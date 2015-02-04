@@ -37,14 +37,20 @@ class apache
       require => Package['apache2'],
   }
 
-  file { '/var/www/3fs':
-    ensure => 'link',
-    target => '/vagrant',
-  }
+
 
   exec
   {
     'echo "ServerName localhost" | sudo tee /etc/apache2/conf-enabled/fqdn.conf':
+      require => Package['apache2'],
+  }
+
+  file
+  {
+    '/var/www/3fs':
+      ensure  => 'link',
+      owner   => root, group => root,
+      target  => '/vagrant',
       require => Package['apache2'],
   }
 }

@@ -32,10 +32,10 @@ and open the template in the editor.
 
             if (array_key_exists('msisdn', $_POST)) {
                 include './client.php';
-                client();
+//
                 if ($success == true) {
                     echo '<div class="alert alert-success">';
-                    echo 'Vaša telefonska številka ima naslednje podatke: ' . $Client->result;
+                    echo 'Vaša telefonska številka ima naslednje podatke: ' . $client->result;
                     echo '</div>';
                 } else {
                     echo ' <div class="alert alert-danger">';

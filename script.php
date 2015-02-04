@@ -50,15 +50,15 @@
 ////echo '<br />';
 
 
-//echo 'Validation client.php';
-//$output = shell_exec('php -l client.php');
-//echo 'php -l : ' . $output;
-//$output = shell_exec('vendor/bin/phpcs --standard=PSR2 client.php');
-//echo 'phpcs : ' . $output;
-//$output = shell_exec('vendor/bin/phpmd client.php text codesize,design,naming,unusedcode,controversial --strict');
-//echo 'phpmd : ' . $output;
-//$output = shell_exec('phpcpd --min-lines 3 --min-tokens 50 client.php');
-//echo 'phpcpd : ' . $output;
+echo 'Validation client.php';
+$output = shell_exec('php -l client.php');
+echo 'php -l : ' . $output;
+$output = shell_exec('vendor/bin/phpcs --standard=PSR2 client.php');
+echo 'phpcs : ' . $output;
+$output = shell_exec('vendor/bin/phpmd client.php text codesize,design,naming,unusedcode,controversial --strict');
+echo 'phpmd : ' . $output;
+$output = shell_exec('phpcpd --min-lines 3 --min-tokens 50 client.php');
+echo 'phpcpd : ' . $output;
 
 echo 'Validation server.php';
 $output = shell_exec('php -l server.php');
