@@ -37,8 +37,6 @@ class apache
       require => Package['apache2'],
   }
 
-
-
   exec
   {
     'echo "ServerName localhost" | sudo tee /etc/apache2/conf-enabled/fqdn.conf':
