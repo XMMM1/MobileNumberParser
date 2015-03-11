@@ -7,12 +7,24 @@ class MsisdnTest extends \PHPUnit_Framework_TestCase
     public function testErrorGetMsisdnDetail()
     {
         include dirname(__FILE__) . '/../Msisdn.php';
+
         $msi = new \Mno\Msisdn('+ 123');
-        $this->assertEquals(false, $msi->getMsisdnDetail());
+        $this->assertEquals('Error: msisdn not valid ', $msi->getMsisdnDetail());
         $msi = new \Mno\Msisdn('+ asdgasd');
-        $this->assertEquals(false, $msi->getMsisdnDetail());
+        $this->assertEquals('Error: msisdn not valid ', $msi->getMsisdnDetail());
         $msi = new \Mno\Msisdn('+ 12341asdgasd');
-        $this->assertEquals(false, $msi->getMsisdnDetail());
+        $this->assertEquals('Error: msisdn not valid ', $msi->getMsisdnDetail());
+    }
+
+    /**
+     * @covers \Mno\Msisdn::prepareMsisdn
+     */
+    public function testPrepareMsisdn()
+    {
+        $msi = new \Mno\Msisdn();
+        $this->assertEquals('+38640734068', $msi->prepareMsisdn('+38640734068'));
+        $msi = new \Mno\Msisdn();
+        $this->assertEquals('+38640734068', $msi->prepareMsisdn('+ 38640734068'));
     }
 
     /**
@@ -20,7 +32,7 @@ class MsisdnTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidGetMsisdnDetail()
     {
-        include dirname(__FILE__) . '/../Msisdn.php';
+//        include dirname(__FILE__) . '/../Msisdn.php';
         $msi = new \Mno\Msisdn('+38640734068');
         $this->assertEquals('+38640734068', $msi->msisdn);
         $msi = new \Mno\Msisdn('+38640734068');
@@ -113,6 +125,5 @@ class MsisdnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Vodafone, 20, 1011236548, EG', $msi->getMsisdnDetail());
         $msi = new \Mno\Msisdn('+ 201111236548');
         $this->assertEquals('Etisalat, 20, 1111236548, EG', $msi->getMsisdnDetail());
-
     }
 }

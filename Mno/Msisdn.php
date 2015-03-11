@@ -27,13 +27,14 @@ class Msisdn
     /**
      * add needed rules to parse Msisdn ex. (removed space, perhaps some special characters..)
      *
+     * @return msisdn
      * @param type $msisdn
      */
     public function prepareMsisdn($msisdn = null)
     {
         $msisdn = preg_replace('/\s+/', '', $msisdn);
         if ($this->msisdn === null && $msisdn != null) {
-            $this->msisdn = $msisdn;
+            return $msisdn;
         }
     }
 
@@ -68,7 +69,7 @@ class Msisdn
     public function getMsisdnDetail($msisdn = null)
     {
         if ($this->msisdn === null) {
-            $this->prepareMsisdn($msisdn);
+            $this->msisdn = $this->prepareMsisdn($msisdn);
         }
 
         $mno = array(
